@@ -1,10 +1,5 @@
 <?php
-/* ==========================================================================
-   FICHEIRO: instalar.php
-   Para que serve: cria o PRIMEIRO administrador depois de importares
-   database/clube_ciencia_viva.sql. Só funciona enquanto a tabela `utilizador`
-   estiver vazia; depois disso manda para o login. Não há registo público.
-   ========================================================================== */
+
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/layout.php';
 
