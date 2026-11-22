@@ -1,0 +1,218 @@
+/* ==========================================================================
+   FICHEIRO: css/style.css
+   Para que serve: todo o aspeto do site (cores, letra, barra lateral,
+   cartões, formulários, tabelas, gráficos, assistente...). É o único ficheiro de CSS.
+
+   ÍNDICE DAS SECÇÕES (procura pelo nome, por exemplo "SECÇÃO: nav"):
+     variaveis     cores e letras (+ modo escuro)
+     base          reset, fundo quadriculado, títulos h1 e h2
+     barra-lateral barra escura à esquerda (logo e e-mail/Sair)
+     nav           links do menu (Início, Notícias, ... Gestão)
+     conteudo      zona principal à direita da barra
+     cartoes       caixas brancas (.doc), caixa de login, .lead
+     formularios   campos, botões (.btn), links-botão (.link), .row, .stack
+     avisos        mensagem amarela (.flash), texto pequeno (.hint), code
+     tabelas       tabelas, etiquetas (.tag), grupos de ações (.acts)
+     detalhes      caixas que abrem e fecham (details/summary)
+     estatisticas  números grandes da página Início
+     responsivo    ajustes para telemóvel
+     animacao      entrada suave do login
+     extras        animações de entrada, campos de verificação, gráficos, chat da IA
+   ========================================================================== */
+
+
+/* ==========================================================================
+   SECÇÃO: variaveis
+   Para que serve: define as cores e as famílias de letra num só sítio.
+   Se quiseres mudar a cor principal do site, muda --lab aqui.
+   ========================================================================== */
+:root{--ink:#14232b;--paper:#f3f6f8;--grid:#dbe5ea;--card:#fff;--lab:#0b7a6b;--lab-d:#095f53;--on-lab:#fff;--flag:#f2c230;--bad:#b3261e;--mute:#5b6b73;
+--head:'Bricolage Grotesque',system-ui,sans-serif;--body:'IBM Plex Sans',system-ui,sans-serif}
+/* Modo escuro: só troca as cores quando o computador/telemóvel está em escuro.
+   --on-lab é a cor do texto sobre --lab (o teal claro do modo escuro pede texto escuro). */
+@media(prefers-color-scheme:dark){:root{--ink:#e6eef2;--paper:#0f1a20;--grid:#1c2c35;--card:#16252d;--lab:#37c2ac;--lab-d:#5fd6c3;--on-lab:#0f1a20;--mute:#93a6af;--bad:#ff8a80}}
+
+
+/* ==========================================================================
+   SECÇÃO: base
+   Para que serve: regras gerais da página: tamanho das caixas, fundo
+   quadriculado, tipo de letra e títulos h1/h2.
+   ========================================================================== */
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.6 var(--body);color:var(--ink);background:var(--paper);
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+/* Link invisível que aparece quando se navega com Tab. */
+.skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--flag);color:#14232b;padding:8px 14px;font-weight:600;text-decoration:none}
+.skip:focus{left:8px;top:8px}
+h1,h2{font-family:var(--head);line-height:1.1;margin:0 0 .6em}
+h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800}h2{font-size:1.5rem;margin-top:1.8em}
+
+
+/* ==========================================================================
+   SECÇÃO: barra-lateral
+   Para que serve: a barra escura fixa à esquerda: logo "CCVnE" (.brand)
+   e, no fundo, o e-mail com o botão Sair (.who).
+   ========================================================================== */
+.side{position:fixed;inset:0 auto 0 0;width:210px;background:#14232b;color:#f3f6f8;padding:24px 18px;display:flex;flex-direction:column;gap:24px}
+.brand{font:800 1.7rem/1 var(--head);color:var(--flag);text-decoration:none}
+.side-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.menu-btn{display:none;font:600 .95rem var(--body);background:transparent;color:#f3f6f8;border:1px solid #ffffff80;border-radius:6px;padding:7px 12px;cursor:pointer}
+.menu-btn:hover{background:#ffffff14}
+.menu-btn[aria-expanded="true"]{background:#ffffff1f;border-color:var(--flag)}
+.who{margin-top:auto;display:flex;justify-content:space-between;gap:8px;font-size:.85rem;word-break:break-all}
+.who .link{color:var(--flag)}
+
+
+/* ==========================================================================
+   SECÇÃO: nav
+   Para que serve: os links do menu dentro da barra lateral. O link da
+   página atual (aria-current) fica com barra amarela. O link "Gestão"
+   (.staff) aparece separado por uma linha.
+   ========================================================================== */
+nav{display:flex;flex-direction:column;gap:4px}
+nav a{color:inherit;text-decoration:none;padding:8px 12px;border-radius:6px;border-left:4px solid transparent}
+nav a:hover{background:#ffffff14}nav a[aria-current]{border-left-color:var(--flag);background:#ffffff1f;font-weight:600}
+nav .staff{margin-top:14px;border-top:1px solid #ffffff30;border-radius:0 0 6px 6px;padding-top:14px}
+
+
+/* ==========================================================================
+   SECÇÃO: conteudo
+   Para que serve: a zona principal. main.with-side deixa espaço para a
+   barra lateral; main.solo centra uma caixa sozinha (ecrã de login).
+   ========================================================================== */
+main.with-side{margin-left:210px;padding:48px clamp(18px,5vw,64px)}main.solo{min-height:100vh;display:grid;place-items:center;padding:24px}
+
+
+/* ==========================================================================
+   SECÇÃO: cartoes
+   Para que serve: as caixas brancas onde está o texto (.doc, .doc.wide),
+   a caixa do login (.login) e o texto cinzento por baixo dos títulos (.lead).
+   ========================================================================== */
+.doc{max-width:68ch;background:var(--card);padding:clamp(20px,4vw,44px);border-radius:10px;border:1px solid var(--grid);border-top:6px solid var(--lab)}
+.doc.wide{max-width:980px}
+.doc ul{padding-left:1.2em}.doc li{margin:.3em 0}
+.doc+.doc{margin-top:18px}
+article.doc h2{margin-top:0}
+.login{width:min(400px,100%);background:var(--card);padding:32px;border-radius:10px;border:1px solid var(--grid);border-top:6px solid var(--flag)}
+.login h1{font-size:2rem}
+.lead{color:var(--mute);margin-top:-.2em}
+
+
+/* ==========================================================================
+   SECÇÃO: formularios
+   Para que serve: campos de escrita (input, select, textarea), rótulos
+   (label), botão verde (.btn), link com aspeto de texto (.link, e
+   .link.danger a vermelho), linha de campos (.row) e coluna de campos (.stack).
+   Também define o contorno amarelo quando navegas com o teclado.
+   ========================================================================== */
+.stack{display:grid;gap:14px}label{display:grid;gap:4px;font-weight:500;font-size:.92rem}
+input,select,textarea{font:inherit;padding:9px 11px;border:1px solid var(--mute);border-radius:6px;background:var(--paper);color:var(--ink);width:100%}
+input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--flag);outline-offset:2px}
+.btn{font:600 1rem var(--body);background:var(--lab);color:var(--on-lab);border:0;border-radius:6px;padding:10px 18px;cursor:pointer}
+.btn:hover{background:var(--lab-d)}
+.link{background:none;border:0;padding:0;font:inherit;color:var(--lab);cursor:pointer;text-decoration:underline}.link.danger{color:var(--bad)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.row input,.row select{flex:1 1 160px;width:auto}
+
+
+/* ==========================================================================
+   SECÇÃO: avisos
+   Para que serve: a mensagem amarela de confirmação/erro (.flash), o texto
+   pequeno cinzento de ajuda (.hint) e o estilo de pedaços de código (code).
+   ========================================================================== */
+.flash{background:var(--flag);color:#14232b;padding:10px 14px;border-radius:6px;font-weight:500;max-width:68ch}
+.hint{color:var(--mute);font-size:.9rem}code{background:var(--grid);padding:1px 5px;border-radius:4px}
+
+
+/* ==========================================================================
+   SECÇÃO: tabelas
+   Para que serve: tabelas (.scroll deixa-as deslizar no telemóvel),
+   etiquetas redondas (.tag, .tag.on verde, .tag.off vermelha) e grupos
+   de ações lado a lado (.acts).
+   ========================================================================== */
+.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--grid)}th{color:var(--mute);font-weight:600}
+.acts{display:flex;gap:14px}.acts form{margin:0}
+.tag{padding:2px 9px;border-radius:99px;font-size:.8rem;font-weight:600}.tag.on{background:#0b7a6b26;color:var(--lab)}.tag.off{background:#b3261e26;color:var(--bad)}
+
+
+/* ==========================================================================
+   SECÇÃO: detalhes
+   Para que serve: as caixas que abrem e fecham (<details>), usadas na
+   Gestão e no Glossário.
+   ========================================================================== */
+details{border:1px solid var(--grid);border-radius:8px;margin:8px 0;padding:4px 14px}summary{cursor:pointer;font-weight:600;padding:8px 0}
+details form{padding:8px 0 14px}
+
+
+/* ==========================================================================
+   SECÇÃO: estatisticas
+   Para que serve: os quadrados com números grandes (188, 896...) da
+   página Início. (Extra deste projeto, não vinha no CSS original.)
+   ========================================================================== */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0}
+.stat{border:1px solid var(--grid);border-radius:8px;padding:12px}
+.stat b{display:block;font:800 1.8rem/1.1 var(--head);color:var(--lab)}
+.stat span{color:var(--mute);font-size:.9rem}
+
+
+/* ==========================================================================
+   SECÇÃO: responsivo
+   Para que serve: em ecrãs estreitos (telemóvel) a barra lateral passa
+   para o topo e o conteúdo ocupa a largura toda.
+   Mexe em: barra-lateral, nav, conteudo.
+   ========================================================================== */
+@media(max-width:760px){
+  .side{position:static;width:auto;display:block;padding:12px}
+  .side-top{width:100%}
+  .js .menu-btn{display:inline-block}
+  .js .side nav{display:none}
+  .js .side.menu-aberto nav{display:flex;flex-direction:column;flex-wrap:nowrap;margin-top:12px}
+  nav{flex-direction:row;flex-wrap:wrap}
+  nav .staff{margin:0;border:0;padding-top:8px}
+  .who{margin:12px 0 0}
+  main.with-side{margin-left:0;padding:24px 14px}
+}
+
+
+/* ==========================================================================
+   SECÇÃO: animacao
+   Para que serve: a caixa de login entra com um pequeno deslizar. Não
+   anima se a pessoa tiver pedido "reduzir movimento" no sistema.
+   ========================================================================== */
+@media(prefers-reduced-motion:no-preference){.login{animation:in .4s ease-out}@keyframes in{from{opacity:0;transform:translateY(8px)}}}
+
+
+/* ==========================================================================
+   SECÇÃO: extras
+   Para que serve: o que o projeto novo acrescenta ao CSS original:
+     .fade-in              animação de entrada das caixas (só CSS)
+     .tag.warn / .tag.info etiquetas amarela e azul (estados pendente, etc.)
+     input[type=checkbox]  campos de verificação sem ficar a 100% de largura
+     .graficos / .grafico  caixas dos gráficos do Início (js/graficos.js)
+     .chat / .msg          conversa do Assistente IA (js/assistente.js)
+     .linha-fim            linha de botões alinhada à direita
+   ========================================================================== */
+/* A entrada é feita só com CSS: o conteúdo nunca fica invisível se o
+   JavaScript falhar, for bloqueado ou não chegar a carregar. */
+.fade-in{animation:entrada .5s ease both}
+@keyframes entrada{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.fade-in{animation:none}}
+.tag.warn{background:#f2c23033;color:var(--ink)}.tag.info{background:#2b6cb026;color:var(--ink)}
+input[type=checkbox],input[type=radio]{width:auto}
+.graficos{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:18px 0}
+.grafico{border:1px solid var(--grid);border-radius:8px;padding:12px;background:var(--card)}
+.grafico canvas{max-height:260px}
+.chat{display:grid;gap:10px;max-height:480px;overflow-y:auto;padding:4px 2px;margin:14px 0}
+.msg{padding:10px 14px;border-radius:10px;max-width:85%;white-space:pre-wrap;word-wrap:break-word}
+.msg.eu{justify-self:end;background:var(--lab);color:var(--on-lab)}
+.msg.ia{justify-self:start;background:var(--paper);border:1px solid var(--grid)}
+.msg.erro{justify-self:start;background:#b3261e26;color:var(--bad)}
+.linha-fim{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.atalhos{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 4px}
+.scroll-hint{margin:6px 0 0}
+.btn[disabled]{opacity:.6;cursor:wait}
+a.btn{text-decoration:none;display:inline-block}
+.btn.sec{background:transparent;color:var(--lab);border:2px solid var(--lab)}
+.btn.sec:hover{background:var(--grid)}
+.paginacao{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:16px}
+.paginacao span{color:var(--mute);font-size:.9rem}
